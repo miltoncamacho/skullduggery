@@ -109,7 +109,7 @@ def deface_workflow(layout, args):
     deface_ref_images = layout.get(**filters)
     if not len(deface_ref_images):
         logging.error(f"no reference image found with condition {filters}")
-        return
+        return False
 
     for ref_image in deface_ref_images:
         subject = ref_image.entities["subject"]
@@ -259,3 +259,5 @@ def deface_workflow(layout, args):
         )
         logging.info("saving metadata changes in datalad")
         annex_repo.set_metadata(modified_files, remove={"distribution-restrictions": "sensitive"})
+
+    return True
